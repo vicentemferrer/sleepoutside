@@ -1,8 +1,12 @@
-import { getLocalStorage } from "./utils.mjs";
+// import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-    const cartItems = getLocalStorage("so-cart");
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    let cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
+    if (!Array.isArray(cartItems)) {
+        cartItems = [cartItems]; // Convert to an array if it's a single item object
+    }
+    localStorage.setItem("so-cart", JSON.stringify(cartItems));
+    let htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
@@ -21,7 +25,6 @@ function cartItemTemplate(item) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
-
     return newItem;
 }
 
