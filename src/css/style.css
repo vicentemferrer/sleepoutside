@@ -122,7 +122,8 @@ button {
 .products {
     padding: 0.5em;
 }
-.product-list {
+.product-list,
+.cart-footer {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -202,6 +203,25 @@ button {
     grid-column: 3;
 }
 
+/* Cart Footer Content Styles*/
+.cart-footer p {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% auto 15%;
+    align-items: center;
+
+    font-weight: bold;
+}
+
+.cart-footer p > span {
+    justify-self: left;
+    grid-column: 3;
+}
+
+.hide {
+    display: none;
+}
+
 @media screen and (min-width: 500px) {
     body {
         max-width: 1080px;
@@ -212,6 +232,11 @@ button {
     }
     .cart-card {
         font-size: inherit;
+        grid-template-columns: 150px auto 15%;
+    }
+
+    .cart-footer p {
+        max-width: calc(1080px * 0.63);
         grid-template-columns: 150px auto 15%;
     }
 }
