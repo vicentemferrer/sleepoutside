@@ -29,10 +29,20 @@ export function getParams(param) {
     return urlParams.get(param);
 }
 
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false){
-    if (clear){
-        parentElement.innerHTML = '';
+export function renderListWithTemplate(
+    templateFn,
+    parentElement,
+    list,
+    position = "afterbegin",
+    clear = false,
+) {
+    if (clear) {
+        parentElement.innerHTML = "";
     }
     const templateList = list.map(templateFn);
-    parentElement.insertAdjacentHTML(position, templateList.join(''));   
-} 
+    parentElement.insertAdjacentHTML(position, templateList.join(""));
+}
+
+export function checkVoidArr(arr) {
+    return arr.length === 0;
+}

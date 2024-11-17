@@ -103,6 +103,21 @@ button {
     text-align: center;
 }
 
+#counter {
+    position: absolute;
+    top: 20%;
+    right: 0;
+
+    font-size: var(--small-font);
+    font-weight: bold;
+
+    background-color: var(--primary-color);
+    color: var(--font-base);
+
+    padding: 0.0425rem 0.125rem;
+    border-radius: 0.5rem;
+}
+
 .cart svg {
     width: 25px;
 }
