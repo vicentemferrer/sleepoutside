@@ -1,9 +1,28 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, qs } from "./utils.mjs";
 
 function renderCartContents() {
     const cartItems = getLocalStorage("so-cart") || [];
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
+    totalCartManage(cartItems);
+}
+
+function totalCartManage(arr) {
+    const cartFooter = qs(".cart-footer");
+    if (!checkVoidCart(arr)) {
+        const total = arr.reduce((acc, item) => {
+            acc += item.FinalPrice;
+            return acc;
+        }, 0);
+        cartFooter.classList.remove("hide");
+        qs("span", cartFooter).textContent = `$${total}`;
+    } else {
+        cartFooter.classList.add("hide");
+    }
+}
+
+function checkVoidCart(arr) {
+    return arr.length === 0;
 }
 
 function cartItemTemplate(item) {

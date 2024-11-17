@@ -209,6 +209,8 @@ button {
     display: grid;
     grid-template-columns: 25% auto 15%;
     align-items: center;
+
+    font-weight: bold;
 }
 
 .cart-footer p > span {
