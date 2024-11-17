@@ -1,4 +1,4 @@
-import { getLocalStorage, qs } from "./utils.mjs";
+import { getLocalStorage, qs, checkVoidArr } from "./utils.mjs";
 
 function renderCartContents() {
     const cartItems = getLocalStorage("so-cart") || [];
@@ -9,7 +9,7 @@ function renderCartContents() {
 
 function totalCartManage(arr) {
     const cartFooter = qs(".cart-footer");
-    if (!checkVoidCart(arr)) {
+    if (!checkVoidArr(arr)) {
         const total = arr.reduce((acc, item) => {
             acc += item.FinalPrice;
             return acc;
@@ -19,10 +19,6 @@ function totalCartManage(arr) {
     } else {
         cartFooter.classList.add("hide");
     }
-}
-
-function checkVoidCart(arr) {
-    return arr.length === 0;
 }
 
 function cartItemTemplate(item) {
