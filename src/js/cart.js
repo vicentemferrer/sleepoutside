@@ -9,7 +9,7 @@ function renderCartContents(cartItems) {
 
 function renderCart() {
   const cartContainer = qs('.cart');// Select the cart container element
-  if (checkVoidArr(cartItems)) {    // If the cart is empty
+  if (!cartItems || checkVoidArr(cartItems)) {    // If the cart is empty
     cartContainer.innerHTML = '<p>Your cart is empty.</p>';
   } else {
     cartContainer.innerHTML = '';// Clear the container to prevent duplicate rendering
