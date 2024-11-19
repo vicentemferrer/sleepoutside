@@ -1,38 +1,66 @@
-import { getLocalStorage, setLocalStorage, qs, checkVoidArr } from "./utils.mjs";
+import {
+    getLocalStorage,
+    setLocalStorage,
+    qs,
+    qsAll,
+    checkVoidArr,
+} from "./utils.mjs";
 
 const cartItems = getLocalStorage("so-cart") || [];
-function renderCartContents(cartItems) {
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));// Convert each cart item into HTML
-  qs(".product-list").innerHTML = htmlItems.join("");// Populate the `.product-list` container with HTML
-  totalCartManage(cartItems);// Update total cost or other cart management logic
+
+function addListener(button) {
+    button.addEventListener("click", function () {
+        for (let i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].Id === button.id) {
+                cartItems.splice(i, 1);
+                setLocalStorage("so-cart", cartItems);
+                renderCart();
+                break;
+            }
+        }
+    });
+}
+
+function renderCartContents() {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item)); // Convert each cart item into HTML
+    qs(".product-list").innerHTML = htmlItems.join(""); // Populate the `.product-list` container with HTML
+    const buttonList = qsAll(".removeFromCart");
+    for (let i = 0; i < buttonList.length; i++) {
+        addListener(buttonList[i]);
+    }
+    totalCartManage(); // Update total cost or other cart management logic
 }
 
 function renderCart() {
-  const cartContainer = qs('.cart');// Select the cart container element
-  if (!cartItems || checkVoidArr(cartItems)) {    // If the cart is empty
-    cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-  } else {
-    cartContainer.innerHTML = '';// Clear the container to prevent duplicate rendering
-    // Example: Append item details to the container
-    renderCartContents(cartItems); // Render the contents of the cart
-  };
+    const cartContainer = qs(".cart"); // Select the cart container element
+    if (!cartItems || checkVoidArr(cartItems)) {
+        // If the cart is empty
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        qs(".product-list").innerHTML = "";
+        qs("#total").innerHTML = "$0.00";
+    } else {
+        cartContainer.innerHTML = ""; // Clear the container to prevent duplicate rendering
+        // Example: Append item details to the container
+        renderCartContents(); // Render the contents of the cart
+    }
 }
-function totalCartManage(arr) {
-  const cartFooter = qs(".cart-footer");
-  if (!checkVoidArr(arr)) {
-    const total = arr.reduce((acc, item) => {
-      acc += item.FinalPrice;
-      return acc;
-    }, 0);
-    cartFooter.classList.remove("hide");
-    qs("span", cartFooter).textContent = `$${total}`;
-  } else {
-    cartFooter.classList.add("hide");
-  }
+
+function totalCartManage() {
+    const cartFooter = qs(".cart-footer");
+    if (!checkVoidArr(cartItems)) {
+        const total = cartItems.reduce((acc, item) => {
+            acc += item.FinalPrice;
+            return acc;
+        }, 0);
+        cartFooter.classList.remove("hide");
+        qs("span", cartFooter).textContent = `$${total}`;
+    } else {
+        cartFooter.classList.add("hide");
+    }
 }
 
 function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
+    const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
       src="${item.Image}"
@@ -45,9 +73,12 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  <div class="cart-card__remove">
+    <button class="removeFromCart" id="${item.Id}">Remove From Cart</button>
+  </div>
 </li>`;
 
-  return newItem;
+    return newItem;
 }
 
 // renderCartContents();

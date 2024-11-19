@@ -2,6 +2,10 @@
 export function qs(selector, parent = document) {
     return parent.querySelector(selector);
 }
+
+export function qsAll(selector, parent = document) {
+    return parent.querySelectorAll(selector);
+}
 // or a more concise version if you are into that sort of thing:
 // export const qs = (selector, parent = document) => parent.querySelector(selector);
 
