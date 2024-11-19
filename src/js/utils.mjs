@@ -6,6 +6,7 @@ export function qs(selector, parent = document) {
 export function qsAll(selector, parent = document) {
     return parent.querySelectorAll(selector);
 }
+
 // or a more concise version if you are into that sort of thing:
 // export const qs = (selector, parent = document) => parent.querySelector(selector);
 
@@ -47,6 +48,43 @@ export function renderListWithTemplate(
     parentElement.insertAdjacentHTML(position, templateList.join(""));
 }
 
+export function renderWithTemplate(template, parent, data, callback) {
+    parent.insertAdjacentHTML("afterbegin", template);
+
+    if (callback) callback(data);
+}
+
 export function checkVoidArr(arr) {
     return arr.length === 0;
+}
+
+export function convertToJson(res) {
+    if (res.ok) {
+        return res.json();
+    } else {
+        throw new Error("Bad Response");
+    }
+}
+
+export function convertToText(res) {
+    if (res.ok) {
+        return res.text();
+    } else {
+        throw new Error("Bad Response");
+    }
+}
+
+export async function loadTemplate(path) {
+    const template = await fetch(path).then(convertToText);
+    return template;
+}
+
+export async function loadHeaderFooter(headerCallback) {
+    const headerTemplate = await loadTemplate("../partials/header.html");
+    const headerElement = qs("#main-header");
+    const footerTemplate = await loadTemplate("../partials/footer.html");
+    const footerElement = qs("#main-footer");
+
+    renderWithTemplate(headerTemplate, headerElement, "", headerCallback);
+    renderWithTemplate(footerTemplate, footerElement);
 }

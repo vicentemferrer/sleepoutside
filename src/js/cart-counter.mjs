@@ -1,6 +1,6 @@
 import { getLocalStorage, qs, checkVoidArr } from "./utils.mjs";
 
-function setCounter() {
+export function setCounter() {
     const cartCounter = qs("#counter");
 
     const cartItems = getLocalStorage("so-cart") || [];
@@ -12,5 +12,3 @@ function setCounter() {
         cartCounter.classList.add("hide");
     }
 }
-
-setCounter();
