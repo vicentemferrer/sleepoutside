@@ -6,7 +6,7 @@ import {
     checkVoidArr,
 } from "./utils.mjs";
 
-function cartItemTemplate(item) {
+function cartItemTemplate(item, i) {
     const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
@@ -21,7 +21,7 @@ function cartItemTemplate(item) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
   <div class="cart-card__remove">
-    <button class="removeFromCart" data-id="${item.Id}">Remove From Cart</button>
+    <button class="removeFromCart" data-id="${i}">Remove From Cart</button>
   </div>
 </li>`;
 
@@ -30,7 +30,7 @@ function cartItemTemplate(item) {
 
 function removeListener(e) {
     const filteredItems = this.cartItems.filter(
-        (item) => item.Id !== e.currentTarget.dataset.id,
+        (_, i) => i !== parseInt(e.currentTarget.dataset.id),
     );
     setLocalStorage(this.key, filteredItems);
     this.init();
