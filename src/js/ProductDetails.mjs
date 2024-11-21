@@ -53,16 +53,12 @@ export default class ProductDetails {
         // Set custom comtent based on product requested
         brandH3.textContent = this.product.Brand.Name;
         nameWBH2.textContent = this.product.NameWithoutBrand;
-        productImg.setAttribute("src", this.product.Image);
+        productImg.setAttribute("src", this.product.Images.PrimaryLarge);
         productImg.setAttribute("alt", this.product.Name);
         pricePara.textContent = this.product.ListPrice;
         colorPara.textContent = this.product.Colors.reduce(
-            (acc, color, i, arr) => {
-                acc += color.ColorName;
-                if (i > arr.length - 1) acc += ", ";
-
-                return acc;
-            },
+            (acc, color, i, arr) =>
+                acc + color.ColorName + (i > arr.length - 1 ? ", " : ""),
             "",
         );
         descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
