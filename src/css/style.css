@@ -172,6 +172,36 @@ button {
 }
 /* End product list card */
 
+
+/* Styles for category lists */
+.category-list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0;
+}
+.category-list a {
+    text-decoration: none;
+    color: var(--dark-grey);
+}
+.category-card {
+    flex: 1 1 45%;
+    margin: 0.25em;
+    padding: 0.5em;
+    /*border: 1px solid var(--light-grey);*/
+    max-width: 250px;
+}
+.product-card h2 {
+    margin: 0.5em 0;
+}
+
+.card__name {
+    font-size: 1em;
+}
+
+/* End category list card*/
+
 .product-detail {
     padding: 1em;
     max-width: 500px;

@@ -1,3 +1,4 @@
+const baseURL = import.meta.env.VITE_SERVER_URL;
 import { getLocalStorage, setLocalStorage, qs } from "./utils.mjs";
 
 export default class ProductDetails {
@@ -9,7 +10,8 @@ export default class ProductDetails {
 
     async init() {
         this.product = await this.dataSource.findProductById(this.productId);
-
+        //this.product = await this.dataSource.findProductById(this.productId);
+        //console.log(this.product);
         this.renderProductDetails();
 
         // Add event listener using Function.prototype.bind() method
@@ -53,7 +55,7 @@ export default class ProductDetails {
         // Set custom comtent based on product requested
         brandH3.textContent = this.product.Brand.Name;
         nameWBH2.textContent = this.product.NameWithoutBrand;
-        productImg.setAttribute("src", this.product.Image);
+        productImg.setAttribute("src", this.product.Images.PrimaryLarge);
         productImg.setAttribute("alt", this.product.Name);
         pricePara.textContent = this.product.ListPrice;
         colorPara.textContent = this.product.Colors.reduce(
