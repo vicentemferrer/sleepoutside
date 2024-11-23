@@ -5,6 +5,7 @@ export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
         this.dataSource = dataSource;
+        this.quantity = 1;
         this.product = {};
     }
 
@@ -24,8 +25,8 @@ export default class ProductDetails {
         // Retrieve localStorage array. If not, set a void array.
         const cartArr = getLocalStorage("so-cart") || [];
         // Push data to array.
-        cartArr.push(this.product);
-
+        cartArr.push([this.product, this.quantity]);
+        //console.log(cartArr);
         // Set localStorage with modified array.
         setLocalStorage("so-cart", cartArr);
     }
@@ -50,6 +51,7 @@ export default class ProductDetails {
         const pricePara = qs(".product-card__price", clone);
         const colorPara = qs(".product__color", clone);
         const descriptionPara = qs(".product__description", clone);
+        const quantity = qs(".product__quantity", clone);
         const addButton = qs("#addToCart", clone);
 
         // Set custom comtent based on product requested
@@ -68,6 +70,7 @@ export default class ProductDetails {
             "",
         );
         descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
+        quantity.value = "1";
         addButton.setAttribute("data-id", this.product.Id);
 
         // Append customized template to main view
