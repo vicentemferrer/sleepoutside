@@ -1,3 +1,4 @@
+const baseURL = import.meta.env.VITE_SERVER_URL;
 import { getLocalStorage, setLocalStorage, qs } from "./utils.mjs";
 
 export default class ProductDetails {
@@ -9,7 +10,8 @@ export default class ProductDetails {
 
     async init() {
         this.product = await this.dataSource.findProductById(this.productId);
-
+        //this.product = await this.dataSource.findProductById(this.productId);
+        //console.log(this.product);
         this.renderProductDetails();
 
         // Add event listener using Function.prototype.bind() method
