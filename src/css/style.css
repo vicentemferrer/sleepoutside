@@ -281,6 +281,17 @@ button {
     grid-column: 3;
 }
 
+/* Quantity Styles */
+.cart-card__quantity {
+    display: flex;
+    align-items: center;
+}
+
+.inc,
+.dec {
+    padding: 0.2rem 0.5rem;
+}
+
 /* Cart Footer Content Styles*/
 .cart-footer p {
     width: 100%;
