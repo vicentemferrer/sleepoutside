@@ -59,12 +59,8 @@ export default class ProductDetails {
         productImg.setAttribute("alt", this.product.Name);
         pricePara.textContent = this.product.ListPrice;
         colorPara.textContent = this.product.Colors.reduce(
-            (acc, color, i, arr) => {
-                acc += color.ColorName;
-                if (i > arr.length - 1) acc += ", ";
-
-                return acc;
-            },
+            (acc, color, i, arr) =>
+                acc + color.ColorName + (i > arr.length - 1 ? ", " : ""),
             "",
         );
         descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;

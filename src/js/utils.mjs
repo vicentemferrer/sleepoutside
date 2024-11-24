@@ -74,6 +74,23 @@ export function convertToText(res) {
     }
 }
 
+export function loadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => reject(false);
+        img.src = url;
+    });
+}
+
+export function toTitleCase(str) {
+    return str
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.replace(word[0], word[0].toUpperCase()))
+        .join(" ");
+}
+
 export async function loadTemplate(path) {
     const template = await fetch(path).then(convertToText);
     return template;

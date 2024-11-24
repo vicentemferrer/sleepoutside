@@ -1,8 +1,12 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import {
+    renderListWithTemplate,
+    loadImage,
+    qs,
+    toTitleCase,
+} from "./utils.mjs";
 
 function productCardTemplate(product) {
-    const templateLiteral =
-        `<li class="product-card">
+    const templateLiteral = `<li class="product-card">
             <a href="../product_pages/?product=${product.Id}">
                 <img
                     src="${product.Images.PrimaryMedium}"
@@ -16,19 +20,48 @@ function productCardTemplate(product) {
     return templateLiteral;
 }
 
-export default class ProductListing {
+async function filterProductList(list) {
+    const productPromises = list.map(async (product) => {
+        const path = product.Images.PrimaryMedium;
+
+        try {
+            await loadImage(path);
+            return product;
+        } catch (error) {
+            return null;
+        }
+    });
+
+    const productList = await Promise.allSettled(productPromises);
+
+    return productList
+        .filter(({ status, value }) => status === "fulfilled" && value !== null)
+        .map((product) => product.value);
+}
+
+export default class ProductList {
     constructor(category, dataSource, listElement) {
-        this.category = category;
+        this.category = toTitleCase(category);
         this.listElement = listElement;
         this.dataSource = dataSource;
     }
 
     async init() {
-        const productList = await this.dataSource.getData(this.category);
-        this.renderList(productList);
+        qs("title", document.head).innerHTML =
+            `Sleep Outside | ${this.category}`;
+        qs(".products > h2").textContent = `Top Products: ${this.category}`;
+
+        const productList = await this.dataSource.getData(
+            this.category.toLowerCase(),
+        );
+        this.renderList(await filterProductList(productList));
     }
 
     renderList(productList) {
-        renderListWithTemplate(productCardTemplate, this.listElement, productList);
+        renderListWithTemplate(
+            productCardTemplate,
+            this.listElement,
+            productList,
+        );
     }
 }
