@@ -172,7 +172,6 @@ button {
 }
 /* End product list card */
 
-
 /* Styles for category lists */
 .category-list {
     display: flex;
@@ -212,6 +211,14 @@ button {
     width: 100%;
 }
 
+.product__quantity {
+    font-family: var(--font-body);
+    font-size: var(--font-base);
+    color: var(--dark-grey);
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
 /* Start cart list card styles */
 .cart-card {
     display: grid;
@@ -240,7 +247,12 @@ button {
 
 .cart-card__quantity {
     grid-row: 1;
-    grid-column: 3;
+    grid-column: 4;
+    font-family: var(--font-body);
+    font-size: var(--font-base);
+    color: var(--dark-grey);
+    padding: 0.5em;
+    margin: 0.5em;
 }
 
 .cart-card__price {

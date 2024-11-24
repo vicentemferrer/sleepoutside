@@ -8,9 +8,9 @@ loadHeaderFooter(setCounter);
 
 const category = getParams("category");
 
- // Set title for custom product page
-const title  = qs("title", document.head);
-title.innerHTML = title.innerHTML+`${category}`;
+// Set title for custom product page
+const title = qs("title", document.head);
+title.innerHTML = title.innerHTML + `${category}`;
 
 const categoryText = qs("#category-h2");
 categoryText.innerHTML = categoryText.innerHTML + ` ${category}`;

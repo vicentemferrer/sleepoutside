@@ -11,9 +11,14 @@ export default class ProductDetails {
 
     async init() {
         this.product = await this.dataSource.findProductById(this.productId);
-        //this.product = await this.dataSource.findProductById(this.productId);
-        //console.log(this.product);
+        
         this.renderProductDetails();
+        const quantity = qs(".product__quantity");
+        quantity.addEventListener("input", (event) => {
+            if (parseInt(quantity.value) <= 1 || parseInt(quantity.value) > 99) {
+              quantity.value = 1; // Remove the message content
+            }
+        });
 
         // Add event listener using Function.prototype.bind() method
         // which returns a new function with current instance settled as
@@ -24,9 +29,19 @@ export default class ProductDetails {
     addToCart() {
         // Retrieve localStorage array. If not, set a void array.
         const cartArr = getLocalStorage("so-cart") || [];
+        const quantity = qs(".product__quantity").value;
+        let found = false;
+        for (let i = 0; i < cartArr.length; i++){
+            if (cartArr[i][0].Id === this.product.Id){
+                cartArr[i][1] = parseInt(cartArr[i][1]) + parseInt(quantity);                
+                found = true;
+                break;
+            }
+        };
         // Push data to array.
-        cartArr.push([this.product, this.quantity]);
-        //console.log(cartArr);
+        if(!found){
+            cartArr.push([this.product, quantity]);
+        };
         // Set localStorage with modified array.
         setLocalStorage("so-cart", cartArr);
     }
@@ -70,7 +85,7 @@ export default class ProductDetails {
             "",
         );
         descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
-        quantity.value = "1";
+        quantity.value = this.quantity;
         addButton.setAttribute("data-id", this.product.Id);
 
         // Append customized template to main view
