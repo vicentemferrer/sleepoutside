@@ -1,4 +1,3 @@
-const baseURL = import.meta.env.VITE_SERVER_URL;
 import { getLocalStorage, setLocalStorage, qs } from "./utils.mjs";
 
 export default class ProductDetails {
@@ -46,6 +45,7 @@ export default class ProductDetails {
         // Locate template pieces to customize content
         const brandH3 = qs("h3", clone);
         const nameWBH2 = qs("h2", clone);
+        const productAlt = qs("source", clone);
         const productImg = qs("img", clone);
         const pricePara = qs(".product-card__price", clone);
         const colorPara = qs(".product__color", clone);
@@ -55,7 +55,8 @@ export default class ProductDetails {
         // Set custom comtent based on product requested
         brandH3.textContent = this.product.Brand.Name;
         nameWBH2.textContent = this.product.NameWithoutBrand;
-        productImg.setAttribute("src", this.product.Images.PrimaryLarge);
+        productAlt.setAttribute("srcset", this.product.Images.PrimaryLarge);
+        productImg.setAttribute("src", this.product.Images.PrimaryMedium);
         productImg.setAttribute("alt", this.product.Name);
         pricePara.textContent = this.product.ListPrice;
         colorPara.textContent = this.product.Colors.reduce(

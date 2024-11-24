@@ -39,10 +39,10 @@ function setupQuantity(element) {
 function cartItemTemplate(item, i) {
     const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
-    <img
-      src="${item.Images.PrimarySmall}"
-      alt="${item.Name}"
-    />
+    <picture>
+        <source media="(min-width: 768px)" srcset="${item.Images.PrimaryMedium}" />
+        <img src="${item.Images.PrimarySmall}" alt="${item.Name}" />
+    </picture>
   </a>
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>
