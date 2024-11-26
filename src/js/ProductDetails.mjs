@@ -22,9 +22,18 @@ export default class ProductDetails {
     addToCart() {
         // Retrieve localStorage array. If not, set a void array.
         const cartArr = getLocalStorage("so-cart") || [];
-        // Push data to array.
-        cartArr.push(this.product);
-
+        let found = false;
+        cartArr.map((obj) => {
+            if (this.product.Id === obj.Id) {
+                obj["qty"] = parseInt(obj.qty) + 1;
+                found = true;
+            }
+        });
+        
+        if(!found){
+            this.product["qty"] = 1;
+            cartArr.push(this.product);
+        }
         // Set localStorage with modified array.
         setLocalStorage("so-cart", cartArr);
     }
