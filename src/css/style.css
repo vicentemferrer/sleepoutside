@@ -13,23 +13,28 @@
     --small-font: 0.8em;
     --large-font: 1.2em;
 }
+
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     font-family: var(--font-body);
     font-size: var(--font-base);
     color: var(--dark-grey);
 }
+
 img {
     max-width: 100%;
 }
+
 header {
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
 }
+
 .logo {
     line-height: 60px;
     width: 245px;
@@ -39,23 +44,28 @@ header {
     text-align: right;
     font-family: var(--font-headline);
 }
+
 .logo img {
     width: 60px;
     height: 60px;
 }
+
 .logo a {
     text-decoration: none;
     color: var(--font-body);
 }
+
 .hero {
     position: relative;
 }
+
 .hero .logo {
     position: absolute;
     left: calc(50% - 60px);
     bottom: -10px;
     background-color: white;
 }
+
 .logo--square {
     font-size: var(--small-font);
     width: 110px;
@@ -68,14 +78,17 @@ header {
     align-items: center;
     line-height: 1;
 }
+
 .logo--square img {
     width: 90px;
     height: 90px;
     margin-top: -1.3em;
 }
-.logo--square > div {
+
+.logo--square>div {
     margin-top: -1.7em;
 }
+
 /* utility classes */
 .highlight {
     color: var(--tertiary-color);
@@ -91,9 +104,11 @@ button {
     font-size: var(--large-font);
     cursor: pointer;
 }
+
 .divider {
     border-bottom: 2px solid var(--primary-color);
 }
+
 /* End utility classes */
 
 /* Cart icon styles */
@@ -121,6 +136,7 @@ button {
 .cart svg {
     width: 25px;
 }
+
 .cart:hover svg {
     fill: gray;
 }
@@ -138,24 +154,28 @@ button {
     padding-left: 0;
 }
 
-.product-grid > li {
+.product-grid>li {
     width: 150px;
     /* border: 1px solid var(--light-grey); */
     padding: 0.5em;
     margin: 1em;
 }
+
 .product-grid h2 {
     margin: 0;
 
     font-size: 1.2em;
 }
+
 .product-grid a {
     text-decoration: none;
 }
+
 .product-grid a:link,
 .product-grid a:visited {
     color: var(--dark-grey);
 }
+
 .product-grid a:hover {
     text-decoration: underline;
 }
@@ -167,9 +187,11 @@ button {
     max-width: 600px;
     margin: auto;
 }
+
 .products {
     padding: 0.5em;
 }
+
 .product-list,
 .cart-footer {
     display: flex;
@@ -178,10 +200,12 @@ button {
     list-style-type: none;
     padding: 0;
 }
+
 .product-list a {
     text-decoration: none;
     color: var(--dark-grey);
 }
+
 /* Styles for product lists */
 .product-card {
     flex: 1 1 45%;
@@ -190,6 +214,7 @@ button {
     border: 1px solid var(--light-grey);
     max-width: 250px;
 }
+
 .product-card h2,
 .product-card h3,
 .product-card p {
@@ -203,6 +228,7 @@ button {
 .card__name {
     font-size: 1em;
 }
+
 /* End product list card */
 
 /* Styles for category lists */
@@ -213,10 +239,12 @@ button {
     list-style-type: none;
     padding: 0;
 }
+
 .category-list a {
     text-decoration: none;
     color: var(--dark-grey);
 }
+
 .category-card {
     flex: 1 1 45%;
     margin: 0.25em;
@@ -224,6 +252,7 @@ button {
     /*border: 1px solid var(--light-grey);*/
     max-width: 250px;
 }
+
 .product-card h2 {
     margin: 0.5em 0;
 }
@@ -257,9 +286,11 @@ button {
     grid-row: 1/3;
     grid-column: 1;
 }
+
 .cart-card p {
     margin-top: 0;
 }
+
 .cart-card .card__name {
     grid-row: 1;
     grid-column: 2;
@@ -301,7 +332,7 @@ button {
     font-weight: bold;
 }
 
-.cart-footer p > span {
+.cart-footer p>span {
     justify-self: left;
     grid-column: 3;
 }
@@ -310,14 +341,62 @@ button {
     display: none;
 }
 
+.goCheckout {
+    margin-top: 1rem;
+}
+
+.goCheckout a {
+    text-decoration: none;
+    color: white;
+}
+
+/*form styles*/
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="month"],
+.form textarea,
+.form select,
+.form input[type="number"] {
+    display: block;
+    border: solid 1px var(--primary-color);
+    border-radius: 6px;
+    padding: 1rem;
+    color: #555;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.form input[type="checkout"] {
+    border: none;
+    background-image: linear-gradient(#555, var(--primary-color));
+    color: #fff;
+    border-radius: 6px;
+    padding: .8rem;
+    width: 96%;
+    max-width: 400px;
+    margin: 1rem 2% 2rem 2%;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.form input:required {
+    border-left: solid 8px #B33951;
+}
+
+.form input:required:valid {
+    border-left: solid 8px var(--primary-color);
+
+}
+
 @media screen and (min-width: 500px) {
     body {
         max-width: 1080px;
         margin: auto;
     }
+
     .mission {
         font-size: 1.2em;
     }
+
     .cart-card {
         font-size: inherit;
         grid-template-columns: 150px auto 15% 20%;

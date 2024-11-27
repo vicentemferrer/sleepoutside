@@ -1,26 +1,75 @@
 <!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8" />
 
-        <title>Sleep Outside | Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="css/style.css" />
-        <script src="../js/checkout.js" type="module"></script>
-    </head>
+    <title>Sleep Outside | Checkout</title>
 
-    <body>
-        <header class="divider" id="main-header"></header>
+    <link rel="stylesheet" href="/css/style.css" />
 
-        <main class="divider">
-            <section class="products">
-                <h2>Review & Place your Order</h2>
-            </section>
-        </main>
+</head>
 
-        <footer id="main-footer"></footer>
-    </body>
+<body>
+    <header class="divider" id="main-header"></header>
+
+    <main class="divider">
+        <section class="products">
+            <h2>Review & Place your Order</h2>
+        </section>
+        <form method="get" action="thankyou.html" class="form">
+            <fieldset>
+                <legend>Request</legend>
+                <div>
+                    <h3>Customer Name</h3>
+                    <label for="fname">First Name*</label>
+                    <input type="text" name="fname" id="fname" required>
+                    <label for="lname">Last Name*</label>
+                    <input type="text" name="lname" id="lname" required>
+                </div>
+                <div>
+                    <h3>Address</h3>
+                    <label for="street-address">Street Address*</label>
+                    <input type="text" id="street-address" name="street-address" placeholder="123 Main St" required>
+
+                    <label for="city">City*</label>
+                    <input type="text" id="city" name="city" placeholder="Your City" required>
+
+                    <label for="state">State*</label>
+                    <input type="text" id="state" name="state" placeholder="Your State" required>
+
+                    <label for="zip-code">Zip Code*</label>
+                    <input type="number" id="zip-code" name="zip-code" placeholder="12345" required>
+                </div>
+                <div>
+                    <h3>Payment Information</h3>
+                    <label for="credit-card-number">Credit Card Number*</label>
+                    <input type="number" id="credit-card-number" name="credit-card-number"
+                        placeholder="1234 5678 9012 3456" required>
+
+                    <label for="expiration-date">Expiration Date*</label>
+                    <input type="month" id="expiration-date" name="expiration-date" required>
+
+                    <label for="security-code">Security Code (CVV)*</label>
+                    <input type="number" id="security-code" name="security-code" placeholder="123" required>
+                </div>
+            </fieldset>
+        </form>
+        <div class="summary">
+            <h4>Order Summary</h4>
+            <p>Subtotal: <span class="subtotal">0.00</span></p>
+            <p>Shipping Estimate: <span class="shipping">0.00</span></p>
+            <p>Tax(6%): <span class="tax">0.00</span></p>
+            <p>Order Total: <span class="order-total">0.00</span></p>
+        </div>
+        <button class="checkout" type="checkout">Checkout</button>
+    </main>
+
+    <footer id="main-footer"></footer>
+    <script src="../js/checkout.js" type="module"></script>
+</body>
+
 </html>
