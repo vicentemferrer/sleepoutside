@@ -2,7 +2,6 @@ import { qs, loadHeaderFooter, getParams } from "./utils.mjs";
 import { setCounter } from "./cart-counter.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import ProductDetails from "./ProductDetails.mjs";
 
 
 loadHeaderFooter(setCounter);
@@ -29,12 +28,18 @@ searchForm.addEventListener("submit", async (event) => {
 
     try {
         // Fetch search results from the API
-        const searchResults = await searchProducts(searchQuery);
-
-        const dataSource = new ProductData();
+        const productData = new ProductData();
+        const categories = ["tents", "backpacks", "sleeping-bags", "hammocks"];
+        const searchResults = await productData.searchProducts(searchQuery, categories);
+        const productListContainer = qs(".product-list")
+        if (searchResults.length === 0) {
+            productListContainer.innerHTML = "<p>No products found.</p>";
+            return;
+        }
+        productListContainer.innerHTML = "";
         // Render search results on the product list page
-        const product = new ProductDetails(searchResults, dataSource);
-        product.init();
+        const productList = new ProductList(searchQuery, searchResults, productListContainer);
+        productList.renderList(searchResults);
 
     } catch (error) {
         console.error("Error fetching search results:", error);
@@ -42,16 +47,5 @@ searchForm.addEventListener("submit", async (event) => {
     }
 });
 
-// Function to call the API
-async function searchProducts(query) {
-    const baseUrl = import.meta.env.VITE_SERVER_URL; // Ensure your base URL is correct
-    const url = `${baseUrl}/search?query=${encodeURIComponent(query)}`;//Use encodeURIComponent(query) to safely encode the search query.
 
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`API Error: ${response.statusText}`);
-    }
-
-    return response.json(); // Return JSON data
-}
 

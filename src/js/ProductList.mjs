@@ -41,7 +41,10 @@ async function filterProductList(list) {
 
 export default class ProductList {
     constructor(category, dataSource, listElement) {
-        this.category = toTitleCase(category);
+        // Ensure category is a valid string before calling toTitleCase
+        this.category = category ? toTitleCase(category) : 'Unknown Category'; // Fallback to a default category if invalid
+
+        // this.category = toTitleCase(category);
         this.listElement = listElement;
         this.dataSource = dataSource;
     }

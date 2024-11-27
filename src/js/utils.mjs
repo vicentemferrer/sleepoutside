@@ -91,6 +91,7 @@ export function toTitleCase(str) {
         .join(" ");
 }
 
+
 export async function loadTemplate(path) {
     const template = await fetch(path).then(convertToText);
     return template;
