@@ -42,9 +42,15 @@ export default class CheckoutProcess {
     this.calculateItemSummary();
     this.calculateOrderTotal();
 
+    /*
     qs("form").addEventListener("submit", (e) => {
       e.preventDefault();
 
+      this.checkout();
+    });
+    */
+    qs("#checkoutSubmit").addEventListener("click", (e) => {
+      e.preventDefault();
       this.checkout();
     });
   }
@@ -89,19 +95,24 @@ export default class CheckoutProcess {
 
   async checkout() {
     const formElement = document.forms["checkout"];
-
-    const json = formDataToJSON(formElement);
-    json.orderDate = new Date();
-    json.orderTotal = this.orderTotal;
-    json.tax = this.tax;
-    json.shipping = this.shipping;
-    json.items = packageItems(this.list);
-    console.log(json);
-    try {
-      const res = await services.checkout(json);
-      console.log(res);
-    } catch (err) {
-      console.log(err.message);
+    const validity = formElement.checkValidity(); 
+    if (validity){
+      const json = formDataToJSON(formElement);
+      json.orderDate = new Date();
+      json.orderTotal = this.orderTotal;
+      json.tax = this.tax;
+      json.shipping = this.shipping;
+      json.items = packageItems(this.list);
+      //console.log(json);
+      try {
+        const res = await services.checkout(json);
+        //console.log(res);
+        window.location.assign("/checkout/success.html");
+      } catch (err) {
+        console.log(err.message);
+      }
+    }else{
+      formElement.reportValidity();
     }
   }
 }
