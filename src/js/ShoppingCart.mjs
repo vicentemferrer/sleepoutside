@@ -6,6 +6,7 @@ import {
     checkVoidArr,
 } from "./utils.mjs";
 
+
 function setupQuantity(element) {
     const dec = qs(".dec", element.parentElement);
     const inc = qs(".inc", element.parentElement);
@@ -115,3 +116,36 @@ export default class ShoppingCart {
         }
     }
 }
+
+// export default class subtotalSummary {
+//     constructor(parentSelector, subtotal, tax, shipping, orderTotal) {
+//         this.parentSelector = parentSelector;
+//         this.subtotal = subtotal;
+//         this.tax = tax;
+//         this.shipping = shipping;
+//         this.orderTotal = orderTotal;
+//     }
+//     const SubtotalElement = qs(this.subtotal);
+//     const taxElement = qs(this.tax);
+//     const shippingElement = qs(this.shipping);
+//     const orderTotalElement = qs(this.orderTotal);
+
+//     if(!checkVoidArr(this.cartItems)) {
+//     const Subtotal = this.cartItems.reduce(
+//         (acc, item) => acc + item.FinalPrice * item.qty,
+//         0,
+//     );
+//     // Calculate tax (6% of subtotal)
+//     const tax = Subtotal * 0.06;
+
+//     // Calculate shipping ($10 for the first item, $2 for each additional item)
+//     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+//     const shipping = totalItems > 0 ? 10 + (totalItems - 1) * 2 : 0;
+
+//     // Calculate order total
+//     const orderTotal = Subtotal + tax + shipping;
+//     qs("span", cartFooter).textContent = `$${total.toFixed(2)}`;
+// } else {
+//     cartFooter.classList.add("hide");
+// }
+// }
