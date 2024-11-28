@@ -263,14 +263,33 @@ button {
 
 /* End category list card*/
 
-.product-detail {
+.product-detail:not(#modal.product-detail),
+#modal.product-detail:popover-open {
+  display: flex;
+  flex-direction: column;
+
   padding: 1em;
   max-width: 500px;
   margin: auto;
 }
 
-.product-detail img {
-  width: 100%;
+.product-detail picture {
+  display: block;
+  margin: 0 auto;
+}
+
+#modal.product-detail:popover-open::backdrop {
+  background-color: color-mix(in srgb, #303030, transparent);
+}
+
+#modal.product-detail button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  color: var(--font-body);
+  background-color: transparent;
+  padding: 1rem;
 }
 
 /* Start cart list card styles */

@@ -3,7 +3,15 @@ import {
   loadImage,
   qs,
   toTitleCase,
+  qsAll,
 } from "./utils.mjs";
+import ProductDetails from "./ProductDetails.mjs";
+
+function renderModal(e) {
+  const { id } = e.currentTarget.dataset;
+
+  new ProductDetails(id, this.dataSource).init(true);
+}
 
 function productCardTemplate(product) {
   const templateLiteral = `<li class="product-card">
@@ -16,7 +24,9 @@ function productCardTemplate(product) {
                 <h2 class="card__name">${product.NameWithoutBrand}</h2>
                 <p class="product-card__price">$${product.ListPrice}</p>
             </a>
+            <button popovertarget="modal" data-id="${product.Id}">Lookup</button>
         </li>`;
+
   return templateLiteral;
 }
 
@@ -57,6 +67,10 @@ export default class ProductList {
       this.category.toLowerCase(),
     );
     this.renderList(await filterProductList(productList));
+
+    Array.from(qsAll(".product-card button")).forEach((button) => {
+      button.addEventListener("click", renderModal.bind(this));
+    });
   }
 
   renderList(productList) {

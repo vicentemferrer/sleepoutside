@@ -9,16 +9,15 @@ export default class ProductDetails {
     this.product = {};
   }
 
-  async init() {
+  async init(isModal = false) {
     this.product = await this.dataSource.findProductById(this.productId);
-    //this.product = await this.dataSource.findProductById(this.productId);
-    //console.log(this.product);
-    this.renderProductDetails();
 
-    // Add event listener using Function.prototype.bind() method
-    // which returns a new function with current instance settled as
-    // 'this' inner function context.
-    qs("#addToCart").addEventListener("click", this.addToCart.bind(this));
+    if (!isModal) {
+      this.renderProductDetails();
+      qs("#addToCart").addEventListener("click", this.addToCart.bind(this));
+    } else {
+      this.renderModal();
+    }
   }
 
   addToCart() {
@@ -40,6 +39,31 @@ export default class ProductDetails {
     setLocalStorage("so-cart", cartArr);
     setCounter();
     alertMessage("Product added to cart!");
+  }
+
+  renderModal() {
+    const modal = qs("#modal");
+
+    const brandH3 = qs("h3", modal);
+    const nameWBH2 = qs("h2", modal);
+    const productAlt = qs("source", modal);
+    const productImg = qs("img", modal);
+    const pricePara = qs(".product-card__price", modal);
+    const colorPara = qs(".product__color", modal);
+    const descriptionPara = qs(".product__description", modal);
+
+    brandH3.textContent = this.product.Brand.Name;
+    nameWBH2.textContent = this.product.NameWithoutBrand;
+    productAlt.setAttribute("srcset", this.product.Images.PrimaryMedium);
+    productImg.setAttribute("src", this.product.Images.PrimaryMedium);
+    productImg.setAttribute("alt", this.product.Name);
+    pricePara.textContent = `$${this.product.FinalPrice}`;
+    colorPara.textContent = this.product.Colors.reduce(
+      (acc, color, i, arr) =>
+        acc + color.ColorName + (i < arr.length - 1 ? ", " : ""),
+      "",
+    );
+    descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
   }
 
   renderProductDetails() {
@@ -71,10 +95,10 @@ export default class ProductDetails {
     productAlt.setAttribute("srcset", this.product.Images.PrimaryLarge);
     productImg.setAttribute("src", this.product.Images.PrimaryMedium);
     productImg.setAttribute("alt", this.product.Name);
-    pricePara.textContent = this.product.FinalPrice;
+    pricePara.textContent = `$${this.product.FinalPrice}`;
     colorPara.textContent = this.product.Colors.reduce(
       (acc, color, i, arr) =>
-        acc + color.ColorName + (i > arr.length - 1 ? ", " : ""),
+        acc + color.ColorName + (i < arr.length - 1 ? ", " : ""),
       "",
     );
     descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
