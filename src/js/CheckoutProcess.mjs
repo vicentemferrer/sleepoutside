@@ -1,5 +1,6 @@
 import { getLocalStorage, qs } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
+import { alertMessage } from "./Alerts.mjs";
 
 const services = new ExternalServices();
 
@@ -90,18 +91,27 @@ export default class CheckoutProcess {
   async checkout() {
     const formElement = document.forms["checkout"];
 
-    const json = formDataToJSON(formElement);
-    json.orderDate = new Date();
-    json.orderTotal = this.orderTotal;
-    json.tax = this.tax;
-    json.shipping = this.shipping;
-    json.items = packageItems(this.list);
-    console.log(json);
-    try {
-      const res = await services.checkout(json);
-      console.log(res);
-    } catch (err) {
-      console.log(err.message);
+    const validity = formElement.checkValidity();
+
+    if (validity) {
+      const json = formDataToJSON(formElement);
+      json.orderDate = new Date();
+      json.orderTotal = this.orderTotal;
+      json.tax = this.tax;
+      json.shipping = this.shipping;
+      json.items = packageItems(this.list);
+
+      try {
+        const res = await services.checkout(json);
+
+        window.location.href = "/checkout/success.html";
+      } catch (err) {
+        console.log(err);
+
+        Object.values(err.message).forEach((message) => alertMessage(message));
+      }
+    } else {
+      formElement.reportValidity();
     }
   }
 }

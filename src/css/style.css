@@ -386,6 +386,39 @@ button {
   border-left: solid 8px var(--primary-color);
 }
 
+.alert {
+  margin-top: 0.5rem;
+  margin-inline: 4rem;
+  padding-inline: 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid orangered;
+  border-radius: 1rem;
+
+  background-color: var(--primary-color);
+}
+
+.alert.positive {
+  border: 1px solid var(--secondary-color);
+
+  background-color: lightgreen;
+}
+
+.alert p {
+  font-weight: bold;
+}
+
+.alert button {
+  margin: 0;
+  padding: 0;
+
+  color: var(--font-body);
+  background-color: transparent;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

@@ -13,21 +13,30 @@
     <header class="divider" id="main-header"></header>
     <main class="divider">
       <section class="product-detail"></section>
-      <template id="product-template">
-        <h3></h3>
-        <h2 class="divider"></h2>
-        <picture>
-          <source media="(min-width: 768px)" srcset="" />
-          <img class="divider" src="" alt="" />
-        </picture>
-        <p class="product-card__price"></p>
-        <p class="product__color"></p>
-        <p class="product__description"></p>
-        <div class="product-detail__add">
-          <button id="addToCart">Add to Cart</button>
-        </div>
-      </template>
     </main>
+
+    <template id="product-template">
+      <h3></h3>
+      <h2 class="divider"></h2>
+      <picture>
+        <source media="(min-width: 768px)" srcset="" />
+        <img class="divider" src="" alt="" />
+      </picture>
+      <p class="product-card__price"></p>
+      <p class="product__color"></p>
+      <p class="product__description"></p>
+      <div class="product-detail__add">
+        <button id="addToCart">Add to Cart</button>
+      </div>
+    </template>
+
+    <template id="alertTemplate">
+      <article class="alert positive">
+        <p></p>
+        <button>✖</button>
+      </article>
+    </template>
+
     <footer id="main-footer"></footer>
   </body>
 </html>
