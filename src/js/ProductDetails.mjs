@@ -28,7 +28,7 @@ export default class ProductDetails {
         obj["qty"] = parseInt(obj.qty) + 1;
         found = true;
       }
-    });
+    })
 
     if (!found) {
       this.product["qty"] = 1;
