@@ -106,17 +106,3 @@ export async function loadHeaderFooter(headerCallback) {
     renderWithTemplate(headerTemplate, headerElement, "", headerCallback);
     renderWithTemplate(footerTemplate, footerElement);
 }
-
-export async function animateCartIcon(animateCallback) {
-    const cartIcon = qs(".cart");
-    const addCartIcon = qs("#addToCart");
-    if (!cartIcon || addCartIcon) return;
-    cartIcon.classList.remove("cart-bounce-active");
-    addCartIcon.classList.remove("addCart-bounce-active");
-    setTimeout(() => {
-        cartIcon.classList.add("cart-bounce-active");
-        addCartIcon.classList.add("addCart-bounce-active");
-    }, 0);
-    setClick(cartIcon, animateCallback);
-    setClick(addCartIcon, animateCallback);
-}

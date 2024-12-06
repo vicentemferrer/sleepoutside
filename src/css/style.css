@@ -121,9 +121,8 @@ button {
 }
 
 
-#addToCart:active,
-.cart-bounce-active,
-.addCart-bounce-active {
+/* #addToCart:active, */
+.cart-bounce-active {
   animation: cart-bounce 0.5s ease-in-out;
   animation-duration: 4s;
 }
