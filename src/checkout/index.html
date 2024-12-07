@@ -16,24 +16,43 @@
     <header class="divider" id="main-header"></header>
 
     <main class="divider">
+      <section class="alerts">
+        <ul></ul>
+      </section>
       <section class="products">
         <form name="checkout" class="form">
           <h2>Review & Place your Order</h2>
           <fieldset>
             <legend><h4>Customer Name</h4></legend>
             <label for="fname">First Name*</label>
-            <input type="text" name="fname" id="fname" required />
+            <input
+              type="text"
+              name="fname"
+              id="fname"
+              minlength="1"
+              pattern="[A-Za-z]+"
+              required
+            />
             <label for="lname">Last Name*</label>
-            <input type="text" name="lname" id="lname" required />
+            <input
+              type="text"
+              name="lname"
+              id="lname"
+              minlength="1"
+              pattern="[A-Za-z]+"
+              required
+            />
           </fieldset>
           <fieldset>
             <legend><h4>Address</h4></legend>
-            <label for="address">Street Address*</label>
+            <label for="street">Street Address*</label>
             <input
               type="text"
-              id="address"
-              name="address"
+              id="street"
+              name="street"
               placeholder="123 Main St"
+              minlength="5"
+              pattern="^\d{1,5}\s[A-Za-z0-9\s]+$"
               required
             />
 
@@ -43,6 +62,8 @@
               id="city"
               name="city"
               placeholder="Rexburg"
+              minlength="1"
+              pattern="^[A-Za-z]+$"
               required
             />
 
@@ -52,15 +73,18 @@
               id="state"
               name="state"
               placeholder="ID"
+              maxlength="2"
+              pattern="^[A-Z]{2}$"
               required
             />
 
-            <label for="zip-code">Zip Code*</label>
+            <label for="zip">Zip Code*</label>
             <input
-              type="number"
-              id="zipCode"
-              name="zipCode"
+              type="text"
+              id="zip"
+              name="zip"
               placeholder="83440"
+              pattern="^\d{5}(-\d{4})?$"
               required
             />
           </fieldset>
@@ -72,18 +96,30 @@
               id="cardNumber"
               name="cardNumber"
               placeholder="1234123412341234"
+              maxlength="16"
+              pattern="^[0-9]{16}$"
               required
             />
 
             <label for="expiration">Expiration Date*</label>
-            <input type="month" id="expiration" name="expiration" required />
-
-            <label for="securityCode">Security Code (CVV)*</label>
             <input
-              type="number"
-              id="securityCode"
-              name="securityCode"
+              type="text"
+              id="expiration"
+              name="expiration"
+              placeholder="MM/YY"
+              maxlength="5"
+              pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$"
+              required
+            />
+
+            <label for="code">Security Code (CVV)*</label>
+            <input
+              type="text"
+              id="code"
+              name="code"
               placeholder="123"
+              maxlength="3"
+              pattern="^[0-9]{3}$"
               required
             />
           </fieldset>
@@ -105,6 +141,13 @@
         </form>
       </section>
     </main>
+
+    <template id="alertTemplate">
+      <article class="alert">
+        <p></p>
+        <button>✖</button>
+      </article>
+    </template>
 
     <footer id="main-footer"></footer>
   </body>

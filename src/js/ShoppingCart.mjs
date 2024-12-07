@@ -5,40 +5,40 @@ import {
     qsAll,
     checkVoidArr
 } from "./utils.mjs";
-
+import { setCounter } from "./cart-counter.mjs";
 
 function setupQuantity(element) {
-    const dec = qs(".dec", element.parentElement);
-    const inc = qs(".inc", element.parentElement);
+  const dec = qs(".dec", element.parentElement);
+  const inc = qs(".inc", element.parentElement);
 
-    const id = parseInt(element.dataset.id);
+  const id = parseInt(element.dataset.id);
 
-    const setQuantity = (quantity) => {
-        if (quantity > 0) {
-            const updatedItems = this.cartItems.map((item, i) => {
-                if (i === id) {
-                    item["qty"] = quantity;
-                }
-                return item;
-            });
-            setLocalStorage(this.key, updatedItems);
-            this.init();
+  const setQuantity = (quantity) => {
+    if (quantity > 0) {
+      const updatedItems = this.cartItems.map((item, i) => {
+        if (i === id) {
+          item["qty"] = quantity;
         }
-    };
+        return item;
+      });
+      setLocalStorage(this.key, updatedItems);
+      this.init(setCounter);
+    }
+  };
 
-    dec.addEventListener("click", () => {
-        const currentQty = this.cartItems[id].qty;
-        setQuantity(currentQty - 1);
-    });
+  dec.addEventListener("click", () => {
+    const currentQty = this.cartItems[id].qty;
+    setQuantity(currentQty - 1);
+  });
 
-    inc.addEventListener("click", () => {
-        const currentQty = this.cartItems[id].qty;
-        setQuantity(currentQty + 1);
-    });
+  inc.addEventListener("click", () => {
+    const currentQty = this.cartItems[id].qty;
+    setQuantity(currentQty + 1);
+  });
 }
 
 function cartItemTemplate(item, i) {
-    const newItem = `<li class="cart-card divider">
+  const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <picture>
         <source media="(min-width: 768px)" srcset="${item.Images.PrimaryMedium}" />
@@ -60,61 +60,65 @@ function cartItemTemplate(item, i) {
   </div>
 </li>`;
 
-    return newItem;
+  return newItem;
 }
 
 function removeListener(e) {
-    const filteredItems = this.cartItems.filter(
-        (_, i) => i !== parseInt(e.currentTarget.dataset.id),
-    );
-    setLocalStorage(this.key, filteredItems);
-    this.init();
+  const filteredItems = this.cartItems.filter(
+    (_, i) => i !== parseInt(e.currentTarget.dataset.id),
+  );
+  setLocalStorage(this.key, filteredItems);
+  this.init();
+  setCounter();
 }
 
 export default class ShoppingCart {
-    constructor(key, parentSelector, cartTotal) {
-        this.key = key;
-        this.parentSelector = parentSelector;
-        this.cartTotal = cartTotal;
-    }
+  constructor(key, parentSelector, cartTotal) {
+    this.key = key;
+    this.parentSelector = parentSelector;
+    this.cartTotal = cartTotal;
+  }
 
-    init() {
-        this.cartItems =
-            getLocalStorage(this.key).map((obj) => {
-                if (!("qty" in obj)) {
-                    obj["qty"] = 1;
-                }
-                return obj;
-            }) || [];
-        this.renderCartContents();
-
-        Array.from(qsAll(".qty")).forEach(setupQuantity.bind(this));
-
-        Array.from(qsAll(".removeFromCart")).forEach((button) => {
-            button.addEventListener("click", removeListener.bind(this));
-        });
-    }
-
-    renderCartContents() {
-        const htmlItems = this.cartItems.map(cartItemTemplate);
-        qs(this.parentSelector).innerHTML = htmlItems.join("");
-
-        this.renderTotal();
-    }
-
-    renderTotal() {
-        const cartFooter = qs(this.cartTotal);
-        if (!checkVoidArr(this.cartItems)) {
-            const total = this.cartItems.reduce(
-                (acc, item) => acc + item.FinalPrice * item.qty,
-                0,
-            );
-            cartFooter.classList.remove("hide");
-            qs("span", cartFooter).textContent = `$${total.toFixed(2)}`;
-        } else {
-            cartFooter.classList.add("hide");
+  init(callback = () => {}) {
+    this.cartItems =
+      getLocalStorage(this.key).map((obj) => {
+        if (!("qty" in obj)) {
+          obj["qty"] = 1;
         }
+        return obj;
+      }) || [];
+
+    this.renderCartContents();
+
+    Array.from(qsAll(".qty")).forEach(setupQuantity.bind(this));
+
+    Array.from(qsAll(".removeFromCart")).forEach((button) => {
+      button.addEventListener("click", removeListener.bind(this));
+    });
+
+    callback();
+  }
+
+  renderCartContents() {
+    const htmlItems = this.cartItems.map(cartItemTemplate);
+    qs(this.parentSelector).innerHTML = htmlItems.join("");
+
+    this.renderTotal();
+  }
+
+  renderTotal() {
+    const cartFooter = qs(this.cartTotal);
+    if (!checkVoidArr(this.cartItems)) {
+      const total = this.cartItems.reduce(
+        (acc, item) => acc + item.FinalPrice * item.qty,
+        0,
+      );
+      cartFooter.classList.remove("hide");
+      qs("span", cartFooter).textContent = `$${total.toFixed(2)}`;
+    } else {
+      cartFooter.classList.add("hide");
     }
+  }
 }
 
 // export default class subtotalSummary {
