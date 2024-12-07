@@ -1,9 +1,9 @@
 import {
-  getLocalStorage,
-  setLocalStorage,
-  qs,
-  qsAll,
-  checkVoidArr,
+    getLocalStorage,
+    setLocalStorage,
+    qs,
+    qsAll,
+    checkVoidArr
 } from "./utils.mjs";
 import { setCounter } from "./cart-counter.mjs";
 

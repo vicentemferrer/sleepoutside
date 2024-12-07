@@ -6,3 +6,5 @@ loadHeaderFooter(setCounter);
 
 const cart = new ShoppingCart("so-cart", ".product-list", ".cart-footer");
 cart.init();
+
+

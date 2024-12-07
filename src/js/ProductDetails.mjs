@@ -29,7 +29,11 @@ export default class ProductDetails {
         obj["qty"] = parseInt(obj.qty) + 1;
         found = true;
       }
-    });
+    }
+    )
+
+    const cartIcon = qs(".cart");
+    cartIcon.classList.add("cart-bounce-active");
 
     if (!found) {
       this.product["qty"] = 1;

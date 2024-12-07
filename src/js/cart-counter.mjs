@@ -15,3 +15,4 @@ export function setCounter() {
     cartCounter.classList.add("hide");
   }
 }
+

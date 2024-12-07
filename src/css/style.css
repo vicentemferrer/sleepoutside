@@ -85,7 +85,7 @@ header {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -116,7 +116,29 @@ button {
   padding-top: 1em;
   position: relative;
   text-align: center;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
 }
+
+
+/* #addToCart:active, */
+.cart-bounce-active {
+  animation: cart-bounce 0.5s ease-in-out;
+  animation-duration: 4s;
+}
+
+@keyframes cart-bounce {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+}
+
 
 #counter {
   position: absolute;
@@ -154,7 +176,7 @@ button {
   padding-left: 0;
 }
 
-.product-grid > li {
+.product-grid>li {
   width: 150px;
   /* border: 1px solid var(--light-grey); */
   padding: 0.5em;
@@ -351,7 +373,7 @@ button {
   font-weight: bold;
 }
 
-.cart-footer p > span {
+.cart-footer p>span {
   justify-self: left;
   grid-column: 3;
 }
