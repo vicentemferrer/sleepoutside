@@ -292,6 +292,75 @@ button {
   padding: 1rem;
 }
 
+/* Product detail page styles */
+
+.pd-section {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  gap: 10px;
+  grid-auto-rows: minmax(8, auto);
+  max-width: 500px;
+  margin: auto;
+}
+
+.pd-section h3 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.pd-section h2 {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.pd-color {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+
+.pd-controls {
+  display: flex;
+  text-align: center;
+  grid-column: 1 / 2;
+  grid-row: 4 / 5;
+}
+
+.pd-next {
+  padding: 0.5rem 1rem;
+  display: none;
+}
+
+.pd-prev {
+  padding: 0.5rem 1rem;
+  display: none;
+}
+
+.pd-section picture {
+  display: flex;
+  grid-column: 1 / 2;
+  grid-row: 5 / 6;
+}
+
+.pd-img {
+  margin: auto;
+  max-height: 500px;
+}
+
+.pd-price {
+  grid-column: 1 / 2;
+  grid-row: 6 / 7;
+}
+
+.pd-description {
+  grid-column: 1 / 2;
+  grid-row: 7 / 8;
+}
+
+.pd-add {
+  grid-column: 1 / 2;
+  grid-row: 8 / 9;
+}
+
 /* Start cart list card styles */
 .cart-card {
   display: grid;
