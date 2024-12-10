@@ -7,14 +7,24 @@ export default class ProductDetails {
     this.productId = productId;
     this.dataSource = dataSource;
     this.product = {};
+    this.slideIndex = 0;
   }
 
   async init(isModal = false) {
     this.product = await this.dataSource.findProductById(this.productId);
 
     if (!isModal) {
+      if(this.product.Images.ExtraImages){
+        if(this.product.Images.ExtraImages.length > 0){
+          this.slideIndex = this.product.Images.ExtraImages.length;
+          qs(".pd-prev").style.display = "block";
+          qs(".pd-prev").addEventListener("click", this.diffSlides.bind(this));
+          qs(".pd-next").style.display = "block";
+          qs(".pd-next").addEventListener("click", this.plusSlides.bind(this));
+        }
+      }
       this.renderProductDetails();
-      qs("#addToCart").addEventListener("click", this.addToCart.bind(this));
+      qs("#pd-addToCart").addEventListener("click", this.addToCart.bind(this));
     } else {
       this.renderModal();
     }
@@ -75,40 +85,64 @@ export default class ProductDetails {
     qs("title", document.head).innerHTML =
       `Sleep Outside | ${this.product.Name}`;
 
-    // Get product detail node
-    const productDetailElement = qs(".product-detail");
-    // Get product detail template content
-    const productTemplate = qs("#product-template");
-
-    // Clone template content
-    const clone = productTemplate.content.cloneNode(true);
-
-    // Locate template pieces to customize content
-    const brandH3 = qs("h3", clone);
-    const nameWBH2 = qs("h2", clone);
-    const productAlt = qs("source", clone);
-    const productImg = qs("img", clone);
-    const pricePara = qs(".product-card__price", clone);
-    const colorPara = qs(".product__color", clone);
-    const descriptionPara = qs(".product__description", clone);
-    const addButton = qs("#addToCart", clone);
+    const brandH3 = qs(".pd-brand");
+    const nameWBH2 = qs(".pd-name");
+    const pricePara = qs(".pd-price");
+    const descriptionPara = qs(".pd-description");
+    const addButton = qs("#pd-addToCart");
+    const colorPara = qs(".pd-color");
 
     // Set custom comtent based on product requested
     brandH3.textContent = this.product.Brand.Name;
     nameWBH2.textContent = this.product.NameWithoutBrand;
-    productAlt.setAttribute("srcset", this.product.Images.PrimaryLarge);
-    productImg.setAttribute("src", this.product.Images.PrimaryMedium);
-    productImg.setAttribute("alt", this.product.Name);
     pricePara.textContent = `$${this.product.FinalPrice}`;
+    descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
+    addButton.setAttribute("data-id", this.product.Id);
+
     colorPara.textContent = this.product.Colors.reduce(
       (acc, color, i, arr) =>
         acc + color.ColorName + (i < arr.length - 1 ? ", " : ""),
       "",
     );
-    descriptionPara.innerHTML = this.product.DescriptionHtmlSimple;
-    addButton.setAttribute("data-id", this.product.Id);
+    
+    if (this.slideIndex == 0){
+      const productImg = qs(".pd-img");
+      productImg.setAttribute("src", this.product.Images.PrimaryExtraLarge);
+      productImg.setAttribute("alt", this.product.Name);
+    }else{
+      this.showSlides();
+    }
+  }
 
-    // Append customized template to main view
-    productDetailElement.appendChild(clone);
+  // Next controls
+  plusSlides() {
+    this.slideIndex += 1;
+    this.showSlides();
+  }
+
+  // previous controls
+  diffSlides() {
+    this.slideIndex += -1;
+    this.showSlides();
+  }
+
+  showSlides() {    
+    //const productAlt = qs(".pd-source");
+    const productImg = qs(".pd-img");
+    if (this.slideIndex == this.product.Images.ExtraImages.length){
+      productImg.setAttribute("src", this.product.Images.PrimaryExtraLarge);
+      productImg.setAttribute("alt", this.product.Name);
+    }else if (this.slideIndex < 0) {
+      this.slideIndex = this.product.Images.ExtraImages.length;
+      productImg.setAttribute("src", this.product.Images.PrimaryExtraLarge);
+      productImg.setAttribute("alt", this.product.Name);  
+    }else if (this.slideIndex > this.product.Images.ExtraImages.length) {
+      this.slideIndex = 0;
+      productImg.setAttribute("src", this.product.Images.ExtraImages[this.slideIndex].Src);
+      productImg.setAttribute("alt", this.product.Name);        
+    }else{
+      productImg.setAttribute("src", this.product.Images.ExtraImages[this.slideIndex].Src);
+      productImg.setAttribute("alt", this.product.Name); 
+    }
   }
 }

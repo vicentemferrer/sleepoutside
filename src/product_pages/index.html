@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="../css/style.css" />
     <script src="../js/product.js" type="module"></script>
   </head>
-
   <body>
     <header class="divider" id="main-header"></header>
     <main class="divider">
-      <section class="product-detail"></section>
+      <section class="pd-section">
+        <div class="pd-controls">
+          <button class="pd-prev">&#10094;</button>
+          <button class="pd-next">&#10095;</button>
+        </div>
+        <h3 class="pd-brand"></h3>
+        <h2 class="pd-name divider"></h2>
+        <picture>
+          <source class="pd-source" media="(min-width: 768px)" srcset="" />
+          <img class="pd-img" src="" alt="" />
+        </picture>
+        <p class="pd-price"></p>
+        <p class="pd-color"></p>
+        <p class="pd-description"></p>
+        <div class="pd-add">
+          <button id="pd-addToCart">Add to Cart</button>
+        </div>
+      </section>
     </main>
-
-    <template id="product-template">
-      <h3></h3>
-      <h2 class="divider"></h2>
-      <picture>
-        <source media="(min-width: 768px)" srcset="" />
-        <img class="divider" src="" alt="" />
-      </picture>
-      <p class="product-card__price"></p>
-      <p class="product__color"></p>
-      <p class="product__description"></p>
-      <div class="product-detail__add">
-        <button id="addToCart">Add to Cart</button>
-      </div>
-    </template>
-
     <template id="alertTemplate">
       <article class="alert positive">
         <p></p>
